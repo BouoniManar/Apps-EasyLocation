@@ -1,0 +1,7 @@
+{
+  "name": "app-location-maison",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
