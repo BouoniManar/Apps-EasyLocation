@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Signin</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title color="danger">EasyLocation</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-text color="dark">
+    <h1>Connexion</h1>
+  </ion-text>
+
+  <form [formGroup]="ionicForm" (ngSubmit)="login()">
+    <ion-list>
+
+      <!-- Email Input -->
+      <ion-item class="custom-border">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Votre e-mail" formControlName="email" required="true"></ion-input>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['email'].touched && ionicForm.controls['email'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['email'].errors?.['required']" class="errorInput" color="danger">Email is required.</ion-text>
+        <ion-text *ngIf="ionicForm.controls['email'].errors?.['pattern']" class="errorInput" color="danger">Please provide a valid email.</ion-text>
+      </div>
+
+      <!-- Password Input -->
+      <ion-item class="custom-border">
+        <ion-icon name="bag-outline" slot="start"></ion-icon>
+        <ion-input type="password" placeholder="Mot de passe" formControlName="password" required="true"></ion-input>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['password'].errors?.['required']" class="errorInput" color="danger">Password is required.</ion-text>
+      </div>
+
+      <!-- Submit Button -->
+      <ion-item>
+        <ion-button slot="end" color="danger" expand="full" type="submit" [disabled]="!ionicForm.valid">Se connecter</ion-button>
+      </ion-item>
+
+      <!-- Signup Link -->
+      <ion-text>
+        <p>Vous n'avez pas de compte ? <ion-text color="danger" routerLink="/signup">Créer un compte</ion-text></p>
+      </ion-text>
+
+      <!-- Forgot Password Link -->
+      <ion-text>
+        Mot de passe oublié ?
+      </ion-text>
+
+    </ion-list>
+  </form>
+
+</ion-content>

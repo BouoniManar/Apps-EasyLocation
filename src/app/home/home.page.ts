@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; // Ajoutez cette ligne
+import { AlertController } from '@ionic/angular'; // Import AlertController
 
 
 
@@ -44,11 +45,43 @@ export class HomePage {
     }
   ];
 
-  constructor(private router: Router) {} // Injectez le Router
+  constructor(private alertController: AlertController,private router: Router) {} // Injectez le Router
 
   goToDetails(id: string) {
     // Naviguer vers la page de détails de l'annonce
     this.router.navigate(['/details', id]); // Modifiez le chemin selon votre configuration de routes
   }
 
+
+
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Vous devez être connecté',
+      message: 'Pour ajouter cette annonce à vos favoris, veuillez vous connecter.',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+            // Navigate to the home page when "Annuler" is clicked
+            this.router.navigate(['/home']);
+            console.log('Annuler clicked, navigating to home.');
+          }
+        },
+        {
+          text: 'Je me connecter',
+          handler: () => {
+            this.router.navigate(['/signin']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  goToSignin(){
+
+  }
 }

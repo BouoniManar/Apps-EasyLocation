@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "app-location-maison"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "app-location-maison-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

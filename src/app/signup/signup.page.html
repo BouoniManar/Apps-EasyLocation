@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title color="danger">EasyLocation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-text color="dark">
+    <h1>Création de compte</h1>
+  </ion-text>
+
+  <form [formGroup]="ionicForm" (ngSubmit)="signUp()" novalidate>
+    <ion-list>
+
+      <!-- Email Input -->
+      <ion-item class="custom-border">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Votre e-mail" required formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['email'].touched && ionicForm.controls['email'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['email'].errors?.['required']" class="errorInput" color="danger">Email is required.</ion-text>
+        <ion-text *ngIf="ionicForm.controls['email'].errors?.['pattern']" class="errorInput" color="danger">Please provide a valid email.</ion-text>
+      </div>
+
+      <!-- Password Input -->
+      <ion-item class="custom-border">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input type="password" placeholder="Mot de passe" required formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['password'].errors?.['required']" class="errorInput" color="danger">Password is required.</ion-text>
+        <ion-text *ngIf="ionicForm.controls['password'].errors?.['pattern']" class="errorInput" color="danger">
+          Password must be at least 8 characters long, with one uppercase letter, one number, and one special character.
+        </ion-text>
+      </div>
+
+      <!-- Confirm Password Input -->
+      <ion-item class="custom-border">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input type="password" placeholder="Confirmer votre Mot de passe" required formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['confirmPassword'].touched && ionicForm.controls['confirmPassword'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['confirmPassword'].errors?.['required']" class="errorInput" color="danger">Confirmation password is required.</ion-text>
+      </div>
+
+      <!-- Role Selection -->
+      <ion-item>
+        <ion-label>Rôle</ion-label>
+        <ion-select formControlName="role" required>
+          <ion-select-option value="owner">Propriétaire</ion-select-option>
+          <ion-select-option value="tenant">Locataire</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="ionicForm.controls['role'].touched && ionicForm.controls['role'].invalid" style="padding-bottom: 16px;">
+        <ion-text *ngIf="ionicForm.controls['role'].errors?.['required']" class="errorInput" color="danger">Role selection is required.</ion-text>
+      </div>
+
+      <!-- Submit Button -->
+      <ion-item>
+        <ion-button slot="end" color="danger" expand="full" type="submit" [disabled]="!ionicForm.valid">Créer</ion-button>
+      </ion-item>
+
+      <!-- Already have an account -->
+      <ion-text>
+        <p>Vous avez déjà un compte ? <ion-text color="danger" routerLink="/signin">Se connecter</ion-text></p>
+      </ion-text>
+
+      <!-- Forgot password link -->
+      <ion-text>
+        Mot de passe oublié ?
+      </ion-text>
+
+    </ion-list>
+  </form>
+</ion-content>
