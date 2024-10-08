@@ -76,7 +76,7 @@ export class SignupPage implements OnInit {
         {
           text: 'OK',
           handler: () => {
-            this.router.navigate(['/success']); // Navigate to success page
+            this.router.navigate(['/success']); 
           }
         }
       ]

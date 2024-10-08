@@ -49,7 +49,7 @@ export class SigninPage implements OnInit {
         );
         if (user) {
           loading.dismiss();
-          this.router.navigate(['/home']);
+          this.router.navigate(['/bienvenue']);
         }
       } catch (err: unknown) {  // Explicitly declaring err as unknown
         loading.dismiss();

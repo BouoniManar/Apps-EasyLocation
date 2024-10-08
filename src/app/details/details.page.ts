@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Import AlertController
 
 @Component({
@@ -9,7 +9,7 @@ import { AlertController } from '@ionic/angular'; // Import AlertController
 })
 export class DetailsPage implements OnInit {
   adId?: string = '';
-  ad: any; // Variable for storing ad details
+  ad: any;
   adImages: string[] = [
     'https://www.mubawab-media.com/ad/7/952/439F/m/1_78245919.jpg',
     'https://www.mubawab-media.com/ad/8/003/242F/m/457463434_864117485251146_2981280704814568999_n_78892590.jpg'
@@ -22,14 +22,12 @@ export class DetailsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Get the ad ID from the route parameters
     this.adId = this.route.snapshot.paramMap.get('id') || '';
-    // Load ad details based on the ID
     this.loadAdDetails(this.adId);
   }
 
   loadAdDetails(id: string) {
-    // Simulated list of ads (replace this with actual data fetching logic)
+
     const ads = [
       {
         id: '1',
@@ -106,7 +104,6 @@ export class DetailsPage implements OnInit {
     await alert.present();
   }
 
-  goToSignin() {
-    this.router.navigate(['/login']);
-  }
+
+
 }

@@ -19,8 +19,9 @@ export class AuthenticationService {
 
     }
 
-    async MotdePassOublier(email:string){
-      return await this.ngFireAuth.sendPasswordResetEmail(email)
+    async resetPassword(email: string) {
+      return await this.ngFireAuth.sendPasswordResetEmail(email);
+
     }
 
     async signOut(){

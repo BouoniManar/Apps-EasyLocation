@@ -47,10 +47,9 @@
         <p>Vous n'avez pas de compte ? <ion-text color="danger" routerLink="/signup">Créer un compte</ion-text></p>
       </ion-text>
 
-      <!-- Forgot Password Link -->
-      <ion-text>
-        Mot de passe oublié ?
-      </ion-text>
+      <div class="forgotpassword">
+        <a [routerLink]="['/forgot-password']" style="color: #FFC33F">Forgot Password?</a>
+      </div>
 
     </ion-list>
   </form>

@@ -1,0 +1,75 @@
+<ion-content [fullscreen]="true">
+  <!-- Toolbar with a menu button and title -->
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="danger" size="large">EasyLocation</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+  <!-- Search bar -->
+  <ion-searchbar placeholder="Rechercher sur EasyLocation"></ion-searchbar>
+
+  <!-- Welcome text -->
+  <ion-text class="ion-padding-top">
+    <h1>Bienvenue !</h1>
+  </ion-text>
+
+  <!-- Latest ads section -->
+  <ion-text class="ion-margin-top">
+    <h1>Dernières annonces</h1>
+  </ion-text>
+
+  <!-- Grid to display ads -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let ad of ads">
+        <ion-card>
+
+          <!-- Heart button to trigger a popover or an alert -->
+          <ion-button shape="round" size="small" id="present-alert"
+           (click)="presentAlert()" class="custom-heart-button" color="light">
+            <ion-icon slot="icon-only" name="heart" class="custom-heart-button"></ion-icon>
+          </ion-button>
+
+          <!-- Image and details of the ad -->
+          <img alt="image" [src]="ad.imageUrl" (click)="goToDetails(ad.id)"/>
+          <ion-card-header>
+            <ion-card-title>{{ ad.title }}</ion-card-title>
+            <ion-card-subtitle>{{ ad.location }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text color="danger">
+              <strong>{{ ad.price }} DT</strong>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-row style="width: 100%; text-align: center;">
+        <ion-col>
+          <ion-icon name="storefront-outline" style="font-size: 15px; margin-bottom: 0;"></ion-icon>
+          <ion-title size="small" routerLink="/bienvenue">Accueil</ion-title>
+        </ion-col>
+
+        <ion-col>
+          <ion-icon name="heart" style="font-size: 15px; margin-bottom: 0;"></ion-icon>
+          <ion-title size="small" routerLink="">Favoris</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

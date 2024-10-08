@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Ajoutez cette ligne
-import { AlertController } from '@ionic/angular'; // Import AlertController
+import { Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
+import { AuthenticationService } from '../authentication.service';
 
 
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-bienvenue',
+  templateUrl: 'bienvenue.page.html',
+  styleUrls: ['bienvenue.page.scss'],
 })
-export class HomePage {
+export class BienvenuePage {
 //tableau d'annonce
 
 
@@ -45,11 +46,11 @@ export class HomePage {
     }
   ];
 
-  constructor(private alertController: AlertController,private router: Router) {} // Injectez le Router
+  constructor(private alertController: AlertController,private toastController: ToastController,private router: Router, public authService:AuthenticationService) {} // Injectez le Router
 
   goToDetails(id: string) {
     // Naviguer vers la page de détails de l'annonce
-    this.router.navigate(['/details', id]); 
+    this.router.navigate(['/details', id]);
   }
 
 
@@ -81,7 +82,25 @@ export class HomePage {
     await alert.present();
   }
 
-  goToSignin(){
+  async logout() {
+    try {
+      await this.authService.signOut();
+      this.presentToast('Vous êtes déconnecté avec succès.');
+      this.router.navigate(['/signin']);
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+      this.presentToast('Erreur lors de la déconnexion. Veuillez réessayer.');
+    }
+  }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, 
+      position: 'bottom',
+      color: 'success'
+    });
+
+    await toast.present();
   }
 }
