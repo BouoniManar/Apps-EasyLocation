@@ -32,10 +32,8 @@
       <ion-col size="6" *ngFor="let ad of ads">
         <ion-card>
 
-          <!-- Heart button to trigger a popover or an alert -->
-          <ion-button shape="round" size="small" id="present-alert"
-           (click)="presentAlert()" class="custom-heart-button" color="light">
-            <ion-icon slot="icon-only" name="heart" class="custom-heart-button"></ion-icon>
+          <ion-button shape="round" size="small"  (click)="addToFavoris(ad)" [color]="ad.isFavorite ? 'warning' : 'light'">
+            <ion-icon [name]="ad.isFavorite ? 'star' : 'star-outline'"></ion-icon>
           </ion-button>
 
           <!-- Image and details of the ad -->
@@ -55,7 +53,6 @@
   </ion-grid>
 
 
-
   <ion-footer>
     <ion-toolbar>
       <ion-row style="width: 100%; text-align: center;">
@@ -65,11 +62,12 @@
         </ion-col>
 
         <ion-col>
-          <ion-icon name="heart" style="font-size: 15px; margin-bottom: 0;"></ion-icon>
-          <ion-title size="small" routerLink="">Favoris</ion-title>
+          <ion-icon name="star" style="font-size: 15px; margin-bottom: 0;" (click)="goToFavoris()"></ion-icon>
+          <ion-title size="small">Favoris</ion-title>
         </ion-col>
       </ion-row>
     </ion-toolbar>
   </ion-footer>
+
 
 </ion-content>

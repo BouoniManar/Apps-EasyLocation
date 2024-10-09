@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="small" color="danger">Mes annonces sauvegardées</ion-title>
+    <ion-back-button default-href="/bienvenue" slot="start"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Display the favorites -->
+  <ion-grid *ngIf="favorites.length > 0; else noFavorites">
+    <ion-row>
+      <ion-col size="6" *ngFor="let ad of favorites">
+        <ion-card>
+          <img alt="image" [src]="ad.imageUrl" (click)="goToDetails(ad.id)" />
+          <ion-card-header>
+            <ion-card-title>{{ ad.title }}</ion-card-title>
+            <ion-card-subtitle>{{ ad.location }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text color="danger">
+              <strong>{{ ad.price }} DT</strong>
+            </ion-text>
+
+            <!-- Positioned trash icon to remove from favorites -->
+            <ion-button fill="clear" color="danger" (click)="removeFromFavorites(ad)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- If no favorites are available -->
+  <ng-template #noFavorites>
+    <ion-text color="medium">
+      <h2>Aucune annonce sauvegardée</h2>
+    </ion-text>
+    <ion-button expand="full" color="danger" routerLink="/bienvenue">Parcourir les annonces</ion-button>
+  </ng-template>
+</ion-content>

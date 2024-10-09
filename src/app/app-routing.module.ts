@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'bienvenue',
     loadChildren: () => import('./bienvenue/bienvenue.module').then( m => m.BienvenuePageModule)
   },
+  {
+    path: 'favoris',
+    loadChildren: () => import('./favoris/favoris.module').then( m => m.FavorisPageModule)
+  },
 
 
 
