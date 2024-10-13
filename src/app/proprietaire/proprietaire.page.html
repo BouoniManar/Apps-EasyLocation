@@ -1,25 +1,14 @@
 <ion-content [fullscreen]="true">
-  <!-- Toolbar with a menu button and title -->
+  <!-- Toolbar -->
   <ion-toolbar color="light">
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title color="danger" size="large">EasyLocation</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()">
-        <ion-icon name="log-out-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
-
 
   <!-- Search bar -->
   <ion-searchbar placeholder="Rechercher sur EasyLocation"></ion-searchbar>
-
-  <!-- Welcome text -->
-  <ion-text class="ion-padding-top">
-    <h1>Bienvenue !</h1>
-  </ion-text>
 
   <!-- Latest ads section -->
   <ion-text class="ion-margin-top">
@@ -29,14 +18,15 @@
   <!-- Grid to display ads -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let ad of ads">
-        <ion-card>
+      <ion-col size="6" *ngFor="let ad of ads | async"> <!-- Use async to handle observable ads -->
+        <ion-card >
 
-          <ion-button shape="round" size="small"  (click)="addToFavoris(ad)" [color]="ad.isFavorite ? 'warning' : 'light'">
-            <ion-icon [name]="ad.isFavorite ? 'star' : 'star-outline'"></ion-icon>
+          <!-- Heart button (can be used for future functionality like adding to favorites) -->
+          <ion-button shape="round" size="small" (click)="presentAlert()" color="light">
+            <ion-icon slot="icon-only" name="heart"></ion-icon>
           </ion-button>
 
-          <!-- Image and details of the ad -->
+          <!-- Ad image and details -->
           <img alt="image" [src]="ad.imageUrl" (click)="goToDetails(ad.id)"/>
           <ion-card-header>
             <ion-card-title>{{ ad.title }}</ion-card-title>
@@ -53,6 +43,9 @@
   </ion-grid>
 
 
+
+
+
   <ion-tabs>
     <ion-tab-bar slot="bottom" >
 
@@ -61,18 +54,19 @@
         <ion-label>Accueil</ion-label> <!-- Using ion-label instead of ion-title for tab text -->
       </ion-tab-button>
 
-      <ion-tab-button tab="favoris" (click)="goToFavoris()">
+      <ion-tab-button tab="favoris">
         <ion-icon name="star"></ion-icon>
         <ion-label>Favoris</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="profil" routerLink="/profil-locataire">
+      <ion-tab-button tab="profil" routerLink="/profil-proprietaire">
         <ion-icon name="person-circle-outline"></ion-icon>
         <ion-label>Profil</ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>
   </ion-tabs>
+
 
 
 

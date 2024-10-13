@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/profil-proprietaire"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mes Annonces</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="ads.length > 0; else noAds">
+    <ion-item *ngFor="let ad of ads">
+      <ion-label>
+        <h2>{{ ad.title }}</h2>
+       
+      </ion-label>
+      <ion-button slot="end" color="warning" (click)="editAd(ad.id)">Modifier</ion-button>
+      <ion-button slot="end" color="danger" (click)="deleteAd(ad.id)">Supprimer</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noAds>
+    <ion-text color="medium">
+      <p>Aucune annonce disponible.</p>
+    </ion-text>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/ajout-annonce">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

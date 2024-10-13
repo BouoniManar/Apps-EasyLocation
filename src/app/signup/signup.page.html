@@ -10,6 +10,7 @@
   </ion-text>
 
   <form [formGroup]="ionicForm" (ngSubmit)="signUp()" novalidate>
+    <div class="ion-margin">
     <ion-list>
 
       <!-- Email Input -->
@@ -65,8 +66,9 @@
         <p>Vous avez déjà un compte ? <ion-text color="danger" routerLink="/signin">Se connecter</ion-text></p>
       </ion-text>
 
-     
+
 
     </ion-list>
+  </div>
   </form>
 </ion-content>

@@ -50,7 +50,7 @@ favorites: any[] = [];
     }
   ];
 
-  constructor(private alertController: AlertController,private toastController: ToastController,private router: Router, public authService:AuthenticationService) {} // Injectez le Router
+  constructor(private alertController: AlertController,private toastController: ToastController,private router: Router, public authService:AuthenticationService) {}
 
   goToDetails(id: string) {
     // Naviguer vers la page de détails de l'annonce
@@ -111,19 +111,17 @@ favorites: any[] = [];
 
 
   addToFavoris(ad: any) {
-    ad.isFavorite = !ad.isFavorite;  // Toggle the favorite status
+    ad.isFavorite = !ad.isFavorite;
 
-    // Add to or remove from the favorites array
     if (ad.isFavorite) {
       this.favorites.push(ad);
       this.presentToast('Ajouté aux favoris');
     } else {
-      // Remove the ad from the favorites array
       this.favorites = this.favorites.filter(favorite => favorite.id !== ad.id);
       this.presentToast('Retiré des favoris');
     }
   }
-  
+
   goToFavoris() {
     this.router.navigate(['/favoris'], { state: { favorites: this.favorites } });
   }

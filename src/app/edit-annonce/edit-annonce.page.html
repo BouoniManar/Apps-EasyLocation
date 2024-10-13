@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/mes-annonces"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modifier Annonce</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="adForm" (ngSubmit)="updateAd()">
+    <ion-item>
+      <ion-label position="floating">Titre</ion-label>
+      <ion-input formControlName="title" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Location</ion-label>
+      <ion-input formControlName="location" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Prix (DT)</ion-label>
+      <ion-input type="number" formControlName="price" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Image URL</ion-label>
+      <ion-input formControlName="imageUrl"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" color="danger" type="submit" [disabled]="!adForm.valid">Modifier l'annonce</ion-button>
+  </form>
+</ion-content>

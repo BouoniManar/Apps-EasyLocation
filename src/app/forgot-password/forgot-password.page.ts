@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.page.scss'],
 })
 export class ForgotPasswordPage implements OnInit {
-  email: string = '';  // S'assurer que l'email est une chaîne vide au départ
+  email: string = '';
 
   constructor(
     private authService: AuthenticationService,
@@ -20,7 +20,7 @@ export class ForgotPasswordPage implements OnInit {
   ngOnInit() {}
 
   async reset() {
-    if (!this.email || this.email.trim() === '') {  
+    if (!this.email || this.email.trim() === '') {
       this.presentToast('Veuillez entrer une adresse e-mail valide');
       return;
     }
@@ -38,14 +38,14 @@ export class ForgotPasswordPage implements OnInit {
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000,  // Durée en millisecondes
-      position: 'bottom',  // Position du toast (haut, bas, milieu)
+      duration: 2000,
+      position: 'bottom',
     });
 
     await toast.present();
     toast.onDidDismiss().then(() => {
       if (message.includes('envoyé')) {
-        this.router.navigate(['/signin']);  // Rediriger après succès
+        this.router.navigate(['/signin']);  
       }
     });
   }

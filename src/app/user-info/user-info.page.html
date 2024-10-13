@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title size="small">Modifier mes informations</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/profil"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="avatar-container ion-text-center">
+    <ion-avatar>
+      <img [src]="selectedImage || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Profile Image">
+    </ion-avatar>
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input">
+  </div>
+
+  <form (ngSubmit)="saveUserInfo()">  <!-- Ensure (ngSubmit) is present -->
+    <ion-item>
+      <ion-label position="floating">Nom</ion-label>
+      <ion-input [(ngModel)]="user.name" type="text" name="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="user.email" type="email" name="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input [(ngModel)]="user.password" type="password" name="password" placeholder="Entrez le nouveau mot de passe"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Confirmer mot de passe</ion-label>
+      <ion-input [(ngModel)]="user.confirmPassword" type="password" name="confirmPassword" placeholder="Confirmez le nouveau mot de passe"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="full" color="danger">Sauvegarder</ion-button>
+  </form>
+</ion-content>

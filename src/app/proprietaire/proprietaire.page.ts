@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 import { Ad } from '../models/ad';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-proprietaire',
+  templateUrl: './proprietaire.page.html',
+  styleUrls: ['./proprietaire.page.scss'],
 })
-export class HomePage implements OnInit {
+export class ProprietairePage implements OnInit {
   ads!: Observable<Ad[]>;
 
   constructor(
@@ -53,5 +53,7 @@ export class HomePage implements OnInit {
       ],
     });
     await alert.present();
+
   }
+
 }
