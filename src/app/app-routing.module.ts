@@ -30,10 +30,7 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
-  {
-    path: 'confirmation',
-    loadChildren: () => import('./confirmation/confirmation.module').then( m => m.ConfirmationPageModule)
-  },
+
   {
     path: 'bienvenue',
     loadChildren: () => import('./bienvenue/bienvenue.module').then( m => m.BienvenuePageModule)
@@ -69,6 +66,10 @@ const routes: Routes = [
   {
     path: 'edit-annonce',
     loadChildren: () => import('./edit-annonce/edit-annonce.module').then( m => m.EditAnnoncePageModule)
+  },
+  {
+    path: 'mes-locations',
+    loadChildren: () => import('./mes-locations/mes-locations.module').then( m => m.MesLocationsPageModule)
   },
 
 

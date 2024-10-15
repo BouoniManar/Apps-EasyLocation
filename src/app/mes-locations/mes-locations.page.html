@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/profil-locataire"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="danger">Mes Locations</ion-title>
+  </ion-toolbar>
+
+  <ion-grid *ngIf="ads | async as adsList; else noAds">
+    <ion-row>
+      <ion-col size="6" *ngFor="let ad of adsList">
+        <ion-card>
+          <img [src]="ad.imageUrl" alt="Image de l'appartement" (click)="goToDetails(ad.id)" />
+          <ion-card-header>
+            <ion-card-title>{{ ad.title }}</ion-card-title>
+            <ion-card-subtitle>{{ ad.location }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text color="danger">
+              <strong>{{ ad.price }} DT</strong>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #noAds>
+    <ion-text color="medium">
+      <p>Aucune location disponible.</p>
+    </ion-text>
+  </ng-template>
+</ion-content>

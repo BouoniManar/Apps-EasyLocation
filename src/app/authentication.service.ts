@@ -33,6 +33,9 @@ export class AuthenticationService {
       return await this.ngFireAuth.currentUser
     }
 
-
+    async getCurrentUserId(): Promise<string | null> {
+      const user = await this.ngFireAuth.currentUser; // Attendre la résolution de la promesse
+      return user ? user.uid : null; // Renvoie l'UID si l'utilisateur est connecté, sinon null
+    }
 
 }

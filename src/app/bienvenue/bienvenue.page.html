@@ -12,7 +12,6 @@
     </ion-buttons>
   </ion-toolbar>
 
-
   <!-- Search bar -->
   <ion-searchbar placeholder="Rechercher sur EasyLocation"></ion-searchbar>
 
@@ -26,18 +25,16 @@
     <h1>Dernières annonces</h1>
   </ion-text>
 
-  <!-- Grid to display ads -->
+  <!-- Grid to display ads dynamically from Firestore -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let ad of ads">
+      <ion-col size="6" *ngFor="let ad of ads | async">
         <ion-card>
-
-          <ion-button shape="round" size="small"  (click)="addToFavoris(ad)" [color]="ad.isFavorite ? 'warning' : 'light'">
+          <ion-button shape="round" size="small" (click)="addToFavoris(ad)" [color]="ad.isFavorite ? 'warning' : 'light'">
             <ion-icon [name]="ad.isFavorite ? 'star' : 'star-outline'"></ion-icon>
           </ion-button>
 
-          <!-- Image and details of the ad -->
-          <img alt="image" [src]="ad.imageUrl" (click)="goToDetails(ad.id)"/>
+          <img [src]="ad.imageUrl" (click)="goToDetails(ad.id)" alt="Ad Image" />
           <ion-card-header>
             <ion-card-title>{{ ad.title }}</ion-card-title>
             <ion-card-subtitle>{{ ad.location }}</ion-card-subtitle>
@@ -52,13 +49,12 @@
     </ion-row>
   </ion-grid>
 
-
+  <!-- Tabs for navigation -->
   <ion-tabs>
-    <ion-tab-bar slot="bottom" >
-
+    <ion-tab-bar slot="bottom">
       <ion-tab-button tab="home" routerLink="/bienvenue">
         <ion-icon name="storefront-outline"></ion-icon>
-        <ion-label>Accueil</ion-label> <!-- Using ion-label instead of ion-title for tab text -->
+        <ion-label>Accueil</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="favoris" (click)="goToFavoris()">
@@ -70,13 +66,6 @@
         <ion-icon name="person-circle-outline"></ion-icon>
         <ion-label>Profil</ion-label>
       </ion-tab-button>
-
     </ion-tab-bar>
   </ion-tabs>
-
-
-
-
-
-
 </ion-content>

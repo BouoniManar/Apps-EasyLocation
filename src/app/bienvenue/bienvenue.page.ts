@@ -1,102 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { AuthenticationService } from '../authentication.service';
-
-
+import { Observable } from 'rxjs';
+import { Ad } from '../models/ad';
 
 @Component({
   selector: 'app-bienvenue',
-  templateUrl: 'bienvenue.page.html',
-  styleUrls: ['bienvenue.page.scss'],
+  templateUrl: './bienvenue.page.html',
+  styleUrls: ['./bienvenue.page.scss'],
 })
-export class BienvenuePage {
-//tableau d'annonce
-favorites: any[] = [];
+export class BienvenuePage implements OnInit {
+  ads!: Observable<Ad[]>;  // Observable to fetch ads from Firestore
+  favorites: any[] = [];  // Array to store favorite ads
 
-  ads = [
-    {
-      id: '1',
-      title: 'A louer villa de maître 12 pièces sup 750...',
-      imageUrl: "https://www.mubawab-media.com/ad/7/952/439F/m/1_78245919.jpg",
-      location: 'à Ariana Ville',
-      price: 750,
-      isFavorite: false
-    },
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private firestore: AngularFirestore,
+    private toastController: ToastController  // Inject ToastController for notifications
+  ) {}
 
-    {
-      id: '2',
-      title: 'Appartement à louer, 3 pièces sup 120...',
-      imageUrl: 'https://www.mubawab-media.com/ad/8/003/242F/m/457463434_864117485251146_2981280704814568999_n_78892590.jpg',
-      location: 'Centre-ville Tunis',
-      price: 500,
-      isFavorite: false
-    },
-    {
-      id: '3',
-      title: 'Centre d\'affaire 5* Business Plaza Center',
-      imageUrl: 'https://www.mubawab-media.com/promotion/4/092F/pictures/m/Facade_77477088.jpg',
-      location: 'Charguia 2 à La Soukra',
-      price: 12500,
-      isFavorite: false
-    },
-    {
-      id: '4',
-      title: 'Etage de Villa S3 spacieux pour des expat...',
-      imageUrl: 'https://www.mubawab-media.com/ad/8/002/004F/h/IMG_8170_78878680.jpeg',
-      location: 'El Menzah 5 à Ariana Ville',
-      price: 1000,
-      isFavorite: false
-    }
-  ];
-
-  constructor(private alertController: AlertController,private toastController: ToastController,private router: Router, public authService:AuthenticationService) {}
-
-  goToDetails(id: string) {
-    // Naviguer vers la page de détails de l'annonce
-    this.router.navigate(['/details', id]);
+  ngOnInit() {
+    this.fetchAds();  // Fetch ads when the component is initialized
   }
 
+  fetchAds() {
+    // Fetch ads from Firestore and listen for real-time updates
+    this.ads = this.firestore.collection<Ad>('ads').valueChanges({ idField: 'id' });
+  }
 
+  // Method to navigate to the ad details page
+  goToDetails(id: string) {
+    this.router.navigate(['/details', id]);  // Navigate to the details page with the ad's ID
+  }
 
-
+  // Method to present an alert when a user attempts to add a favorite without being logged in
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Vous devez être connecté',
-      message: 'Pour ajouter cette annonce à vos favoris, veuillez vous connecter.',
+      message: 'Veuillez vous connecter pour ajouter cette annonce à vos favoris.',
       buttons: [
         {
           text: 'Annuler',
           role: 'cancel',
           handler: () => {
-            // Navigate to the home page when "Annuler" is clicked
-            this.router.navigate(['/home']);
-            console.log('Annuler clicked, navigating to home.');
-          }
+            this.router.navigate(['/home']);  // Navigate back to home on cancel
+          },
         },
         {
           text: 'Je me connecter',
           handler: () => {
-            this.router.navigate(['/signin']);
-          }
-        }
-      ]
+            this.router.navigate(['/signin']);  // Navigate to sign-in page
+          },
+        },
+      ],
     });
-
-    await alert.present();
+    await alert.present();  // Present the alert
   }
 
-  async logout() {
-    try {
-      await this.authService.signOut();
-      this.presentToast('Vous êtes déconnecté avec succès.');
-      this.router.navigate(['/signin']);
-    } catch (error) {
-      console.error('Erreur lors de la déconnexion:', error);
-      this.presentToast('Erreur lors de la déconnexion. Veuillez réessayer.');
-    }
-  }
-
+  // Method to present a toast notification
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
@@ -108,8 +71,7 @@ favorites: any[] = [];
     await toast.present();
   }
 
-
-
+  // Add or remove an ad from favorites
   addToFavoris(ad: any) {
     ad.isFavorite = !ad.isFavorite;
 
@@ -122,9 +84,16 @@ favorites: any[] = [];
     }
   }
 
+  // Navigate to favorites page
   goToFavoris() {
     this.router.navigate(['/favoris'], { state: { favorites: this.favorites } });
   }
+
+  // Method to logout
+  async logout() {
+   this.router.navigate(["/home"]);
+  }
+
 
 
 }

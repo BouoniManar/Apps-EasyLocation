@@ -77,7 +77,6 @@ export class UserInfoPage implements OnInit {
             try {
                 // Update email
                 await user.updateEmail(this.user.email);
-
                 // Send verification email
                 await user.sendEmailVerification();
                 this.presentToast("A verification email has been sent. Please verify your email.");
@@ -128,6 +127,8 @@ export class UserInfoPage implements OnInit {
         this.presentToast("Error updating profile.");
     }
 }
+
+
 
 
 

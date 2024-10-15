@@ -4,4 +4,5 @@ export interface Ad {
   imageUrl: string;
   location: string;
   price: number;
+  isFavorite?: boolean; 
 }
