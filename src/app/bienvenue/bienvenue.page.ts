@@ -11,8 +11,11 @@ import { Ad } from '../models/ad';
   styleUrls: ['./bienvenue.page.scss'],
 })
 export class BienvenuePage implements OnInit {
-  ads!: Observable<Ad[]>;  // Observable to fetch ads from Firestore
   favorites: any[] = [];  // Array to store favorite ads
+  ads$!: Observable<Ad[]>;  // Observable for ads
+  allAds: Ad[] = [];  // Array to store all fetched ads
+  filteredAds: Ad[] = [];  // Array to store filtered ads
+  searchLocation: string = '';  // Variable for location search
 
   constructor(
     private alertController: AlertController,
@@ -27,8 +30,32 @@ export class BienvenuePage implements OnInit {
 
   fetchAds() {
     // Fetch ads from Firestore and listen for real-time updates
-    this.ads = this.firestore.collection<Ad>('ads').valueChanges({ idField: 'id' });
+    this.ads$ = this.firestore.collection<Ad>('ads').valueChanges({ idField: 'id' });
+    this.ads$.subscribe(ads => {
+      this.allAds = ads;  // Store all ads
+      this.filteredAds = ads;  // Initially, display all ads
+      console.log("Fetched ads:", ads);  // Debugging log
+    });
   }
+
+  // Efficient filtering method
+  filterAds(event: any) {
+    this.searchLocation = event.target.value.toLowerCase().trim();  // Update search variable
+
+    if (this.searchLocation) {
+      // Filter ads based on location
+      this.filteredAds = this.allAds.filter(ad =>
+        ad.location.toLowerCase().includes(this.searchLocation)
+      );
+    } else {
+      // If no search term, reset filteredAds to show all ads
+      this.filteredAds = this.allAds;
+    }
+
+    console.log("Filtered ads:", this.filteredAds);  // Debugging log
+  }
+
+
 
   // Method to navigate to the ad details page
   goToDetails(id: string) {
@@ -94,6 +121,8 @@ export class BienvenuePage implements OnInit {
    this.router.navigate(["/home"]);
   }
 
-
+goToChat(){
+  this.router.navigate(['/chat'])
+}
 
 }

@@ -34,3 +34,12 @@
   background-color: red;
 }
 
+ion-tab-bar {
+  --background: #ffffff; /* Light background */
+  --color-selected: #f44336; /* Highlight selected tab in red */
+  --color: #333333; /* Default text color */
+}
+
+ion-tab-button {
+  --color-selected: #f44336; /* Red when selected */
+}

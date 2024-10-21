@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/bienvenue"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="danger">Messagerie</ion-title>
+  </ion-toolbar>
+</ion-header>
+<h1 color="primary"> Communiquer Le locataire </h1>
+
+<ion-content>
+  <div *ngFor="let message of messages">
+    <div>
+      <strong>{{ message.senderId }}:</strong> {{ message.content }}
+      <br />
+      <small>{{ message.timestamp | date:'short' }}</small>
+    </div>
+  </div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="newMessageContent" required placeholder="Message"></ion-input>  <!-- Ensure binding is correct -->
+  </ion-item>
+
+
+  <ion-button (click)="sendMessage()">Send</ion-button>
+</ion-content>

@@ -1,64 +1,50 @@
 <ion-header>
   <ion-toolbar>
-
-
     <ion-buttons slot="start">
       <ion-back-button default-href="/"></ion-back-button>
     </ion-buttons>
+    <ion-title>Détails de l'annonce</ion-title>
 
-
-    <ion-title size="small">Détails de l'annonce</ion-title>
-
-    <ion-button shape="round" size="small"  id="present-alert"
-
-    (click)="presentAlert()"   class="custom-heart-button" color="light" slot="end">
-
-     <ion-icon slot="icon-only" name="heart"  class="custom-heart-button"></ion-icon>
-
+    <!-- Favorite button -->
+    <ion-button shape="round" size="small" (click)="presentAlert()" class="custom-heart-button" color="light" slot="end">
+      <ion-icon slot="icon-only" name="heart"></ion-icon>
     </ion-button>
 
-
+    <!-- More options button -->
     <ion-button slot="end" fill="clear" class="custom-button">
       <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical" class="custom-icon"></ion-icon>
     </ion-button>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-
-
-
-
+  <!-- Ad details card -->
   <ion-card *ngIf="ad">
-    <img [src]="ad.imageUrl" alt="{{ ad.title }}" style="max-width: 100%; height: auto;"/>
+    <img [src]="ad.imageUrl" alt="{{ ad.title }}" style="max-width: 100%; height: auto;" />
 
     <ion-card-header>
       <ion-card-title>{{ ad.title }}</ion-card-title>
       <ion-card-subtitle>
         {{ ad.rooms }} chambres, {{ ad.size }} m²
         <div style="display: flex; align-items: center; margin-top: 4px;">
-          <ion-icon name="location-outline" style="vertical-align: middle;"></ion-icon>
+          <ion-icon name="location-outline"></ion-icon>
           {{ ad.location }}
         </div>
       </ion-card-subtitle>
     </ion-card-header>
+
     <ion-card-content>
       <ion-text color="danger">
         <strong>{{ ad.price }} DT</strong>
       </ion-text>
-
 
       <ion-text color="primary">
         <h1>Description:</h1>
       </ion-text>
 
       <ion-text color="secondary">
-
-        <h2>{{ad.describe}}</h2>
+        <h2>{{ ad.describe }}</h2>
       </ion-text>
-
     </ion-card-content>
   </ion-card>
 </ion-content>

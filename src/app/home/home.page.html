@@ -1,5 +1,4 @@
 <ion-content [fullscreen]="true">
-  <!-- Toolbar -->
   <ion-toolbar color="light">
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
@@ -7,10 +6,8 @@
     <ion-title color="danger" size="large">EasyLocation</ion-title>
   </ion-toolbar>
 
-  <!-- Search bar -->
   <ion-searchbar placeholder="Rechercher sur EasyLocation"></ion-searchbar>
 
-  <!-- Latest ads section -->
   <ion-text class="ion-margin-top">
     <h1>Dernières annonces</h1>
   </ion-text>
@@ -18,10 +15,9 @@
   <!-- Grid to display ads -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let ad of ads | async"> <!-- Use async to handle observable ads -->
+      <ion-col size="6" *ngFor="let ad of ads | async">
         <ion-card>
 
-          <!-- Heart button (can be used for future functionality like adding to favorites) -->
           <ion-button shape="round" size="small" (click)="presentAlert()" color="light">
             <ion-icon slot="icon-only" name="heart"></ion-icon>
           </ion-button>

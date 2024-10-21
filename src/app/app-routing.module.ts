@@ -71,6 +71,14 @@ const routes: Routes = [
     path: 'mes-locations',
     loadChildren: () => import('./mes-locations/mes-locations.module').then( m => m.MesLocationsPageModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'proprietaire-messages',
+    loadChildren: () => import('./proprietaire-messages/proprietaire-messages.module').then( m => m.ProprietaireMessagesPageModule)
+  },
 
 
 
