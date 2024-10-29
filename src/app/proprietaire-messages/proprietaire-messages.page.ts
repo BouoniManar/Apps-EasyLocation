@@ -1,4 +1,6 @@
+// proprietaire-messages.page.ts (Composant pour le propriétaire)
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MessagingService } from '../messaging.service';
 import { Message } from '../models/Message';
 
@@ -9,34 +11,40 @@ import { Message } from '../models/Message';
 })
 export class ProprietaireMessagesPage implements OnInit {
   messages: Message[] = [];
-  ownerId: string = 'currentUserId'; // Set this to the actual current user's ID
-  newMessageContent: string = ''; // For the input of the new message
-  selectedReceiverId: string = ''; // The receiver's ID of the message being replied to
+  newMessageContent: string = '';
+  senderId: string = 'currentOwnerUserId';
+  receiverId: string = '';
+  conversationId: string = ''; 
 
-  constructor(private messagingService: MessagingService) {}
+  constructor(
+    private messagingService: MessagingService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    // Fetch messages for the current owner
-    this.messagingService.getMessagesForOwner(this.ownerId).subscribe(messages => {
+    this.conversationId = this.route.snapshot.paramMap.get('conversationId') || '';
+    this.receiverId = this.route.snapshot.paramMap.get('tenantId') || '';
+    this.loadMessages();
+  }
+
+  loadMessages() {
+    this.messagingService.getConversationMessages(this.conversationId).subscribe(messages => {
       this.messages = messages;
     });
   }
 
   sendMessage() {
     const newMessage: Message = {
-      senderId: this.ownerId,
-      receiverId: this.selectedReceiverId, // Ensure this is set correctly
+      senderId: this.senderId,
+      receiverId: this.receiverId,
       content: this.newMessageContent,
-      timestamp: new Date()
+      timestamp: new Date(),
+      conversationId: this.conversationId
     };
 
-    console.log('Sending message:', newMessage); // Log message object before sending
-
     this.messagingService.sendMessage(newMessage).then(() => {
-      this.newMessageContent = ''; // Clear input after sending
-    }).catch(error => {
-      console.error('Error sending message:', error);
+      this.messages.push(newMessage);
+      this.newMessageContent = '';
     });
   }
-
 }

@@ -1,3 +1,4 @@
+// chat.page.ts (Composant pour le locataire)
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessagingService } from '../messaging.service';
@@ -10,9 +11,10 @@ import { Message } from '../models/Message';
 })
 export class ChatPage implements OnInit {
   messages: Message[] = [];
-  content: string = '';
-  senderId!: string; // Get this from the authenticated user context
-  receiverId!: string; // Get this from route params or other context
+  newMessageContent: string = '';
+  senderId: string = 'currentTenantUserId'; 
+  receiverId: string = ''; // ID du propriétaire
+  conversationId: string = ''; // ID de la conversation
 
   constructor(
     private messagingService: MessagingService,
@@ -20,26 +22,29 @@ export class ChatPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Assume senderId is the current user's ID
-    this.senderId = 'currentUserId'; // Replace with actual user ID
+    this.conversationId = this.route.snapshot.paramMap.get('conversationId') || '';
     this.receiverId = this.route.snapshot.paramMap.get('ownerId') || '';
+    this.loadMessages();
+  }
 
-    // Fetch messages
-    this.messagingService.getMessages(this.senderId, this.receiverId).subscribe(messages => {
+  loadMessages() {
+    this.messagingService.getConversationMessages(this.conversationId).subscribe(messages => {
       this.messages = messages;
     });
   }
 
   sendMessage() {
-    const message: Message = {
+    const newMessage: Message = {
       senderId: this.senderId,
       receiverId: this.receiverId,
-      content: this.content,
-      timestamp: new Date()
+      content: this.newMessageContent,
+      timestamp: new Date(),
+      conversationId: this.conversationId
     };
 
-    this.messagingService.sendMessage(message).then(() => {
-      this.content = ''; // Clear input field after sending
+    this.messagingService.sendMessage(newMessage).then(() => {
+      this.messages.push(newMessage);
+      this.newMessageContent = '';
     });
   }
 }

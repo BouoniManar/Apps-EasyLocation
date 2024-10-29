@@ -80,8 +80,6 @@ const routes: Routes = [
     loadChildren: () => import('./proprietaire-messages/proprietaire-messages.module').then( m => m.ProprietaireMessagesPageModule)
   },
 
-
-
 ];
 
 @NgModule({

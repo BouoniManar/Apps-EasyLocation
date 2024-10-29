@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router'; // Import ActivatedRoute to get the ID
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -10,12 +10,12 @@ import { LoadingController, ToastController } from '@ionic/angular';
   styleUrls: ['./edit-annonce.page.scss'],
 })
 export class EditAnnoncePage implements OnInit {
-  adId: string | undefined; // Store the ad ID as undefined by default
+  adId: string | undefined;
   adForm!: FormGroup;
 
   constructor(
     private firestore: AngularFirestore,
-    private route: ActivatedRoute, // To capture the ad ID from the route
+    private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private loadingCtrl: LoadingController,
@@ -24,7 +24,7 @@ export class EditAnnoncePage implements OnInit {
 
   ngOnInit() {
     const adIdParam = this.route.snapshot.paramMap.get('id');
-    this.adId = adIdParam ? adIdParam : undefined; // Ensure adId is either a string or undefined
+    this.adId = adIdParam ? adIdParam : undefined;
     this.initializeForm();
     if (this.adId) {
       this.loadAdDetails();
@@ -44,10 +44,9 @@ export class EditAnnoncePage implements OnInit {
     const loading = await this.loadingCtrl.create();
     await loading.present();
 
-    // Fetch the ad data from Firestore using the ad ID
     this.firestore.collection('ads').doc(this.adId).valueChanges().subscribe((ad: any) => {
       if (ad) {
-        this.adForm.patchValue(ad); // Populate the form with the ad data
+        this.adForm.patchValue(ad); 
       }
       loading.dismiss();
     }, error => {

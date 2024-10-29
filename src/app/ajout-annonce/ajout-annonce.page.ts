@@ -11,7 +11,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
   styleUrls: ['./ajout-annonce.page.scss'],
 })
 export class AjoutAnnoncePage implements OnInit {
-  adForm!: FormGroup; // Use definite assignment assertion
+  adForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +24,7 @@ export class AjoutAnnoncePage implements OnInit {
     this.adForm = this.fb.group({
       title: ['', Validators.required],
       location: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(1)]], // Ensure price is a positive number
+      price: ['', [Validators.required, Validators.min(1)]],
       imageUrl: ['']
     });
   }
@@ -33,7 +33,7 @@ async addAd() {
       const loading = await this.loadingCtrl.create();
       await loading.present();
 
-      // Save ad to Firestore
+
       this.firestore.collection('ads').add(this.adForm.value)
         .then(async () => {
           loading.dismiss();
@@ -43,7 +43,7 @@ async addAd() {
             color: 'success'
           });
           toast.present();
-          this.adForm.reset(); // Reset form after successful submission
+          this.adForm.reset(); 
         })
         .catch(async (error) => {
           loading.dismiss();

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mes-annonces',
@@ -9,20 +9,19 @@ import { Router } from '@angular/router'; // Import Router
   styleUrls: ['./mes-annonces.page.scss'],
 })
 export class MesAnnoncesPage implements OnInit {
-  ads: any[] = []; // Array to store the ads
+  ads: any[] = [];
 
   constructor(
     private firestore: AngularFirestore,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private router: Router // Inject Router
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.loadAds();
   }
 
-  // Load ads from Firestore
   async loadAds() {
     const loading = await this.loadingCtrl.create();
     await loading.present();
@@ -41,7 +40,6 @@ export class MesAnnoncesPage implements OnInit {
     });
   }
 
-  // Delete an ad from Firestore
   async deleteAd(adId: string) {
     const loading = await this.loadingCtrl.create();
     await loading.present();

@@ -9,7 +9,7 @@
     size="large"
     slot ="end">
   </ion-icon>
-    <ion-title color="danger" size="large">EasyLocation</ion-title>
+    <ion-title color="danger" size="large" class="ion-text-center">EasyLocation</ion-title>
   </ion-toolbar>
 
   <ion-text class="ion-margin-top">
@@ -24,15 +24,13 @@
   <!-- Grid to display ads -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let ad of ads | async"> <!-- Use async to handle observable ads -->
+      <ion-col size="6" *ngFor="let ad of ads | async">
         <ion-card >
 
-          <!-- Heart button (can be used for future functionality like adding to favorites) -->
           <ion-button shape="round" size="small" (click)="presentAlert()" color="light">
             <ion-icon slot="icon-only" name="heart"></ion-icon>
           </ion-button>
 
-          <!-- Ad image and details -->
           <img alt="image" [src]="ad.imageUrl" (click)="goToDetails(ad.id)"/>
           <ion-card-header>
             <ion-card-title>{{ ad.title }}</ion-card-title>
@@ -58,7 +56,7 @@
 
       <ion-tab-button tab="home" >
         <ion-icon routerLink="/proprietaire" name="storefront-outline"></ion-icon>
-        <ion-label routerLink="/proprietaire">Accueil</ion-label> <!-- Using ion-label instead of ion-title for tab text -->
+        <ion-label routerLink="/proprietaire">Accueil</ion-label> 
       </ion-tab-button>
 
       <ion-tab-button tab="favoris" routerLink="/proprietaire-messages">

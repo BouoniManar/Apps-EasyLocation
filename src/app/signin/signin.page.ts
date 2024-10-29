@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/authentication.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // Import Firestore
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-signin',
@@ -36,31 +36,27 @@ export class SigninPage implements OnInit {
 
     if (this.ionicForm.valid) {
       try {
-        // Attempt to log in the user
         const userCredential = await this.authService.loginUser(
           this.ionicForm.value.email,
           this.ionicForm.value.password
         );
 
-        // Get user ID
         const userId = userCredential.user?.uid;
         if (userId) {
-          // Fetch user role from Firestore
           const userDoc = await this.firestore.collection('users').doc(userId).get().toPromise();
           const userData: any = userDoc?.data();
 
-          // Check user role and navigate accordingly
           if (userData?.role === 'owner') {
-            this.router.navigate(['/proprietaire']); // Redirect to owner page
+            this.router.navigate(['/proprietaire']);
           } else {
-            this.router.navigate(['/bienvenue']); // Redirect to tenant page
+            this.router.navigate(['/bienvenue']);
           }
         }
 
-        loading.dismiss(); // Dismiss loading indicator
+        loading.dismiss();
       } catch (err) {
-        loading.dismiss(); // Dismiss loading on error
-        this.presentToast('Login failed. Please try again.'); // Show error message
+        loading.dismiss();
+        this.presentToast('Login failed. Please try again.'); 
       }
     }
   }
@@ -75,6 +71,6 @@ export class SigninPage implements OnInit {
   }
 
   get errorControl() {
-    return this.ionicForm.controls; // Return form controls for validation
+    return this.ionicForm.controls;
   }
 }

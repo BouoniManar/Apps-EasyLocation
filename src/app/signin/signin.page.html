@@ -1,15 +1,14 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header >
     <ion-toolbar>
-      <ion-title size="large">Signin</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button default-href="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="danger" class="ion-text-center">EasyLocation</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-title color="danger">EasyLocation</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-content [fullscreen]="true" class="ion-padding">
+
 
   <ion-text color="dark">
     <h1>Connexion</h1>

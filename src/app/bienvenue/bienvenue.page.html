@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title color="danger" size="large">EasyLocation</ion-title>
+    <ion-title color="danger" size="large" class="ion-text-center">EasyLocation</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
@@ -16,12 +16,10 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- Wrapping everything inside ion-tabs -->
 <ion-tabs>
   <ion-content [fullscreen]="true"  class="ion-no-padding">
 
 
-    <!-- Grid to display ads dynamically -->
     <ion-grid>
       <ion-row>
         <ion-col size="6" *ngFor="let ad of filteredAds">
@@ -45,7 +43,6 @@
     </ion-grid>
   </ion-content>
 
-  <!-- Tabs Bar (inside ion-tabs to make sure it's at the bottom and visible) -->
   <ion-tab-bar slot="bottom" color="light">
     <ion-tab-button tab="home" routerLink="/bienvenue">
       <ion-icon name="storefront-outline"></ion-icon>

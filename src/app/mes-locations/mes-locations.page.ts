@@ -16,15 +16,15 @@ export class MesLocationsPage implements OnInit {
   constructor(
     private firestore: AngularFirestore,
     private router: Router,
-    private authService: AuthenticationService // Injectez le service
+    private authService: AuthenticationService
   ) {}
 
   async ngOnInit() {
-    await this.fetchAds(); // Attendez que les annonces soient récupérées
+    await this.fetchAds();
   }
 
   async fetchAds() {
-    const userId = await this.authService.getCurrentUserId(); // Récupérez l'ID de l'utilisateur courant
+    const userId = await this.authService.getCurrentUserId(); 
     if (userId) {
       this.ads = this.firestore.collection<Ad>('ads', ref => ref.where('userId', '==', userId)).valueChanges({ idField: 'id' });
     } else {

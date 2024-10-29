@@ -10,9 +10,11 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './user-info.page.html',
   styleUrls: ['./user-info.page.scss'],
 })
+
+
 export class UserInfoPage implements OnInit {
   selectedImage: string | ArrayBuffer | null = null;
-  imageFile: File | null = null; // Store selected file
+  imageFile: File | null = null;
   user: any = {
     name: '',
     email: '',
@@ -31,7 +33,6 @@ export class UserInfoPage implements OnInit {
     this.loadUserInfo();
   }
 
-  // Load user info from Firebase Auth
   async loadUserInfo() {
     const user = await this.auth.currentUser;
     if (user) {
@@ -41,11 +42,10 @@ export class UserInfoPage implements OnInit {
     }
   }
 
-  // When the file is selected
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.imageFile = file; // Store the file
+      this.imageFile = file;
       const reader = new FileReader();
       reader.onload = () => {
         this.selectedImage = reader.result;
@@ -67,59 +67,55 @@ export class UserInfoPage implements OnInit {
     }
 
     try {
-        // Update profile information in Firebase Authentication
         await user.updateProfile({
             displayName: this.user.name,
         });
 
-        // Check if email has changed
         if (this.user.email !== user.email) {
             try {
-                // Update email
                 await user.updateEmail(this.user.email);
-                // Send verification email
                 await user.sendEmailVerification();
                 this.presentToast("A verification email has been sent. Please verify your email.");
-                return; // Stop execution here after sending verification
+                return;
             } catch (error) {
                 console.error("Error updating email:", error);
                 this.presentToast("Error updating email. Please verify your new email.");
-                return; // Stop execution if there was an error
+                return;
             }
         }
 
-        // Update password if provided
+
         if (this.user.password) {
             await user.updatePassword(this.user.password);
         }
 
-        // Upload image if a new image is selected
+
         if (this.imageFile) {
             const filePath = `users/${user.uid}/profile_picture`;
             const fileRef = this.storage.ref(filePath);
             const task = this.storage.upload(filePath, this.imageFile);
 
-            // Wait for the file to be uploaded
+
             task.snapshotChanges().pipe(
                 finalize(async () => {
                     const downloadURL = await fileRef.getDownloadURL().toPromise();
                     await user.updateProfile({ photoURL: downloadURL });
 
-                    // Save additional data to Firestore
+
                     await this.firestore.collection('users').doc(user.uid).set({
                         name: this.user.name,
                         email: this.user.email,
                         photoURL: downloadURL
-                    }, { merge: true }); // Use merge to avoid overwriting the entire document
+                    }, { merge: true });
                     this.presentToast("Profile updated successfully!");
                 })
             ).subscribe();
         } else {
-            // Save additional data to Firestore (without new image)
+
             await this.firestore.collection('users').doc(user.uid).set({
                 name: this.user.name,
                 email: this.user.email
-            }, { merge: true }); // Use merge to avoid overwriting the entire document
+            }, { merge: true });
             this.presentToast("Profile updated successfully!");
         }
     } catch (error) {
@@ -127,10 +123,6 @@ export class UserInfoPage implements OnInit {
         this.presentToast("Error updating profile.");
     }
 }
-
-
-
-
 
 
   async presentToast(message: string) {

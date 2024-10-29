@@ -1,26 +1,30 @@
+<!-- chat.page.html (ou proprietaire-messages.page.html) -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button default-href="/bienvenue"></ion-back-button>
+      <ion-back-button default-href="/proprietaire"></ion-back-button>
     </ion-buttons>
-    <ion-title color="danger">Messagerie</ion-title>
+    <ion-title color="danger" class="ion-text-center">Discussion</ion-title>
   </ion-toolbar>
 </ion-header>
-<h1 color="primary"> Communiquer Le locataire </h1>
 
 <ion-content>
-  <div *ngFor="let message of messages">
-    <div>
-      <strong>{{ message.senderId }}:</strong> {{ message.content }}
-      <br />
-      <small>{{ message.timestamp | date:'short' }}</small>
-    </div>
-  </div>
+  <ion-title>
+    <h1>Connecter avec Locataire </h1>
+  </ion-title>
+  
+  <ion-list>
+    <ion-item *ngFor="let message of messages">
+      <ion-label>
+        <h3>{{ message.senderId === senderId ? 'Vous' : (senderId === 'currentTenantUserId' ? 'Propriétaire' : 'Locataire') }}</h3>
+        <p>{{ message.content }}</p>
+        <small>{{ message.timestamp | date: 'short' }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
   <ion-item>
-    <ion-input [(ngModel)]="newMessageContent" required placeholder="Message"></ion-input>  <!-- Ensure binding is correct -->
+    <ion-input [(ngModel)]="newMessageContent" placeholder="Tapez votre message"></ion-input>
+    <ion-button (click)="sendMessage()">Envoyer</ion-button>
   </ion-item>
-
-
-  <ion-button (click)="sendMessage()">Send</ion-button>
 </ion-content>
